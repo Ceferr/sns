@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cefer.sns.mapper.MessageMapper">
+    <resultMap id="messageBean" type="com.cefer.sns.entity.Message">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="status" property="status"/>
+
+        <association property="user" javaType="com.cefer.sns.entity.User">
+            <id column="uid" property="id"/>
+            <result column="nickname" property="nickname"/>
+            <result column="password" property="password"/>
+        </association>
+    </resultMap>
+
+    <select id="listMessage" resultMap="messageBean">
+        select u.*,m.*,u.id,m.id,u.nickname,u.password,m.content,m.status from user u left join message m on u.id = m.id where m.id = #{id}
+    </select>
+
+</mapper>
